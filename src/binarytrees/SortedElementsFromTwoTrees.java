@@ -1,61 +1,46 @@
 package binarytrees;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SortedElementsFromTwoTrees {
 
     public List<Integer> getAllElements(TreeNode root1, TreeNode root2) {
 
-        final List<Integer> inOrder1 = new ArrayList<>();
-        final List<Integer> inOrder2 = new ArrayList<>();
+        final LinkedList<Integer> temp = new LinkedList<>();
+        final List<Integer> result = new LinkedList<>();
 
-        inOrderTrav(root1, inOrder1);
-        inOrderTrav(root2, inOrder2);
+        inOrderTrav(root1, temp);
+        inOrderAndSort(root2, temp, result);
 
-        final List<Integer> result = new ArrayList<>();
-
-        int size1 = inOrder1.size();
-        int size2 = inOrder2.size();
-
-        int i = 0;
-        int j = 0;
-
-        while( i < size1 && j < size2) {
-            int e1 = inOrder1.get(i);
-            int e2 = inOrder2.get(j);
-
-            if(e1 < e2 ){
-                result.add(e1);
-                i++;
-            } else {
-                result.add(e2);
-                j++;
-            }
+        if( !temp.isEmpty()){
+            result.addAll(temp);
         }
 
-        if( i == size1){
-            for(int k = j; k < size2; k++){
-                result.add(inOrder2.get(k));
-            }
-        }
-
-        if( j == size2){
-            for(int k = i; k < size1; k++){
-                result.add(inOrder1.get(k));
-            }
-        }
 
         return result;
     }
 
-    private void inOrderTrav(TreeNode node, List<Integer> result) {
+    private void inOrderTrav(TreeNode node, List<Integer> temp) {
 
         if( node == null){
             return;
         }
-        inOrderTrav(node.left, result);
+        inOrderTrav(node.left, temp);
+        temp.add(node.val);
+        inOrderTrav(node.right, temp);
+    }
+
+    private void inOrderAndSort(TreeNode node, LinkedList<Integer> temp, List<Integer> result ) {
+        if( node == null ){
+            return;
+        }
+        inOrderAndSort(node.left, temp, result);
+
+        while(!temp.isEmpty() && temp.peek() < node.val){
+            result.add(temp.pop());
+        }
         result.add(node.val);
-        inOrderTrav(node.right, result);
+        inOrderAndSort(node.right, temp, result);
     }
 }

@@ -134,14 +134,7 @@ class BinaryTree
 
         addNodes(root, map, currentColumn);
 
-        for(Map.Entry<Integer, List<Node>> entry : map.entrySet()){
-            System.out.println(entry.getKey());
-            List<Node> nodes = entry.getValue();
-            for(Node node: nodes){
-                System.out.print(node.data+ " ");
-            }
-            System.out.println();
-        }
+        System.out.println();
         return new ArrayList<>();
     }
 

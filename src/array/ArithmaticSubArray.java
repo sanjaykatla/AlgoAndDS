@@ -1,5 +1,6 @@
 package array;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -7,13 +8,12 @@ public class ArithmaticSubArray {
 
     public List<Boolean> checkArithmeticSubarrays(int[] nums, int[] l, int[] r) {
 
-        Boolean[] result = new Boolean[l.length];
-
-        for (int i = 0; i < l.length; i++) {
-            result[i] = checkSubArray(nums, l[i], r[i]);
+        List<Boolean> result = new ArrayList<>();
+        for(int i= 0; i<l.length; i++){
+            result.add(checkSubArray(nums, l[i], r[i]));
         }
 
-        return Arrays.asList(result);
+        return result;
 
     }
 

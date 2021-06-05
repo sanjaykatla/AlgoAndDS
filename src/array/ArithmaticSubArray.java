@@ -1,43 +1,54 @@
 package array;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 public class ArithmaticSubArray {
 
-    private int[] nums;
-    private int[] l;
-    private int[] r;
     public List<Boolean> checkArithmeticSubarrays(int[] nums, int[] l, int[] r) {
 
-        this.nums = nums;
-        this.l = l;
-        this.r = r;
+        Boolean[] result = new Boolean[l.length];
 
-
-        List<Boolean> result = new ArrayList<>();
         for (int i = 0; i < l.length; i++) {
-            int start = l[i];
-            int end = r[i];
-
-            List<Integer> list = new ArrayList<Integer>();
-            for (int j = start; j <= end; j++) {
-                list.add(nums[j]);
-            }
-            Collections.sort(list);
-
-            int diff = list.get(1) - list.get(0);
-            boolean diffMatched = true;
-            for (int j = 2; j < list.size(); j++) {
-                if (list.get(j) - list.get(j - 1) != diff) {
-                    diffMatched = false;
-                    break;
-                }
-            }
-            result.add(diffMatched);
+            result[i] = checkSubArray(nums, l[i], r[i]);
         }
 
-        return result;
+        return Arrays.asList(result);
+
+    }
+
+    private Boolean checkSubArray(int[] nums, int l, int r) {
+
+        int length = r - l + 1;
+        int max = nums[l];
+        int min = nums[l];
+
+        for (int i = l; i <= r; i++) {
+            max = Math.max(max, nums[i]);
+            min = Math.min(min, nums[i]);
+        }
+
+        // if all numbers are same
+        if (max == min) {
+            return Boolean.TRUE;
+        }
+
+        // checking if the numder evenly spaced
+        if ((max - min) % (length - 1) != 0) {
+            return Boolean.FALSE;
+        }
+
+        int d = (max - min) / (length - 1);
+
+        boolean[] numbersFound = new boolean[r - l + 1];
+
+        for (int i = l; i <= r; i++) {
+            int num = nums[i] - min;
+            if (num % d != 0 || numbersFound[num / d]) {
+                return Boolean.FALSE;
+            }
+            numbersFound[num / d] = true;
+        }
+        return Boolean.TRUE;
     }
 }

@@ -1,23 +1,30 @@
 package array;
 
-import java.util.Arrays;
-
 public class MaxNumberOfCoins {
     public int maxCoins(int[] piles) {
 
         int result = 0;
 
-        Arrays.sort(piles);
+        sort(piles);
 
-        int start = 0;
-        int end = piles.length -1;
+        for (int i = piles.length - 2; i >= piles.length / 3; i -= 2) {
+            result += piles[i];
+        }
+        return result;
+    }
 
-        while (end - start > 1){
-            result += piles[--end];
-            start++;
-            end--;
+    private void sort(int[] piles) {
+        final int[] freq = new int[10001];
+        for (int pile : piles) {
+            freq[pile]++;
         }
 
-        return result;
+        int idx = 0;
+        for (int i = 0; i < 10001; i++) {
+            while (freq[i] > 0) {
+                piles[idx++] = i;
+                freq[i]--;
+            }
+        }
     }
 }

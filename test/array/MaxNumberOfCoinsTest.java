@@ -2,7 +2,7 @@ package array;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class MaxNumberOfCoinsTest {
 
@@ -24,4 +24,12 @@ public class MaxNumberOfCoinsTest {
         assertEquals(18, result);
     }
 
+    @Test
+    public void testCase3(){
+        final MaxNumberOfCoins numberOfCoins = new MaxNumberOfCoins();
+        int[] input = {7,5,7,7,8,8,5,10,7};
+        final int result = numberOfCoins.maxCoins(input);
+
+        assertEquals(22, result);
+    }
 }

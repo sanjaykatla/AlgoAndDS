@@ -3,13 +3,13 @@ package stack;
 public class StackWithIncrement {
 
     private int[] arr;
+    private int[] inc;
     private int index;
-    private int size;
 
     public StackWithIncrement(int maxSize) {
         arr = new int[maxSize];
-        index = -1;
-        size = maxSize;
+        inc = new int[maxSize];
+        index = 0;
     }
 
     public void push(int x) {
@@ -17,7 +17,7 @@ public class StackWithIncrement {
         if(isFull()){
             return;
         }
-        arr[++index] = x;
+        arr[index++] = x;
     }
 
     public int pop() {
@@ -25,22 +25,29 @@ public class StackWithIncrement {
         if(isEmpty()){
             return -1;
         }
-        return arr[index--];
+
+        int res = arr[index-1] + inc[index-1];
+        if(index - 2 >= 0){
+            inc[index - 2] += inc[index - 1];
+        }
+        inc[index-1] = 0;
+        index--;
+        return res;
     }
 
     public void increment(int k, int val) {
 
-        for(int i =0; i< k && i<=index; i++ ){
-            System.out.println("Incrementing: "+ i +" "+ arr[i]);
-            arr[i] += val;
+        int pos = Math.min(index - 1, k - 1);
+        if( pos >= 0){
+            inc[pos] += val;
         }
     }
 
     private boolean isFull(){
-        return index == size-1;
+        return index == arr.length;
     }
 
     private boolean isEmpty() {
-        return index < 0;
+        return index == 0;
     }
 }

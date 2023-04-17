@@ -1,13 +1,13 @@
-package dp.longest_common_subsequence
+package dp.LongestCommonSubsequence
 
 import org.junit.Test
 
 
-class LCSMemoizationTest {
+class LCSTest {
 
     @Test
     fun lcs() {
-        val longestCommonSubsequence = LCSRecursionMemoization()
+        val longestCommonSubsequence = LCSRecursion()
 
         val start = System.currentTimeMillis()
         val res = longestCommonSubsequence.lcs("abcde", "ace")

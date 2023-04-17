@@ -1,4 +1,4 @@
-package dp.longest_common_subsequence
+package dp.LongestCommonSubsequence
 
 class LCSRecursionMemoization {
 

@@ -1,6 +1,6 @@
-package dp
+package dp.longest_common_subsequence
 
-class LongestCommonSubsequence {
+class LCSRecursion {
 
     var m = 0
     var n = 0
@@ -12,21 +12,20 @@ class LongestCommonSubsequence {
 
         m = s1.length
         n = s2.length
-
         this.s1 = s1
         this.s2 = s2
-
-        return lcsRec(m-1, n-1)
+        return lcs(m-1, n-1)
     }
 
-    fun lcsRec(i: Int, j: Int): Int {
+    private fun lcs(i: Int, j: Int): Int {
 
         if(i<0 || j<0) return 0
 
         if(s1.get(i) == s2.get(j)){
-            return 1 + lcsRec(i-1, j-1)
+            return 1 + lcs(i-1, j-1)
         }
 
-        return lcsRec(i - 1, j).coerceAtLeast(lcsRec(i, j - 1))
+        return lcs(i - 1, j)
+            .coerceAtLeast(lcs(i, j - 1))
     }
 }
